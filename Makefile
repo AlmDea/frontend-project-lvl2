@@ -2,8 +2,10 @@ install:
 	npm install
 publish:
 	npm publish --dry-run
-lint:
+make lint:
 	npx eslint .
+make lint fix:
+	npx eslint --fix .
 test:
 	npm test
 test-coverage:
