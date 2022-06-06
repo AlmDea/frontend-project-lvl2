@@ -1,12 +1,20 @@
-install:
-	npm install
 publish:
 	npm publish --dry-run
-make lint:
+	
+install:
+	npm ci
+
+lint:
 	npx eslint .
-make lint fix:
-	npx eslint --fix .
+
+link:
+	npm link
+
 test:
-	npm test
+	NODE_OPTIONS=--experimental-vm-modules npx jest
+
 test-coverage:
-	npm test -- --coverage
+	NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
+
+test-watch:
+	NODE_OPTIONS=--experimental-vm-modules npx jest --watch
