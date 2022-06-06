@@ -1,6 +1,30 @@
-import { readFileSync } from 'fs';
+import _ from 'lodash';
 
-const data = readFileSync(path, 'utf-8');
-const dataParse = JSON.parse(data);
+const gendiff = (data1, data2) => {
+  const keys = Object.keys({ ...data1, ...data2 });
+  const sortedKeys = _.sortBy(keys);
+  return sortedKeys.map((key) => {
+    const value1 = data1[key];
+    const value2 = data2[key];
+    if (!_.has(data1, key)) {
+      return { type: 'added', key, val: value2 };
+    }
+    if (!_.has(data2, key)) {
+      return { type: 'removed', key, val: value1 };
+    }
+    if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
+      return { type: 'nested', key, children: gendiff(value1, value2) };
+    }
+    if (!_.isEqual(value1, value2)) {
+      return {
+        type: 'updated',
+        key,
+        val1: value1,
+        val2: value2,
+      };
+    }
+    return { type: 'original', key, val: value1 };
+  });
+};
 
-console.log(dataParse);
+export default gendiff;

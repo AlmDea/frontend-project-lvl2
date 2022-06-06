@@ -1,7 +1,8 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/AlmDea/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/AlmDea/frontend-project-lvl2/actions)",
+  "type": "module",
+  "description": "Difference generator is a cli program that determines the difference between two data structures.",
   "main": "index.js",
   "scripts": {
     "test": "jest"
