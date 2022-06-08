@@ -1,13 +1,14 @@
-import { fs, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import path from 'path';
 import parser from './parsers.js';
 import formatter from './formatters/index.js';
-import gendiff from './genDiffTree.js';
+import gendiffTree from './gendiff.js';
 
-const readFile = (filepath) => fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf-8');
+const readFile = (filepath) =>
+  readFileSync(path.resolve(process.cwd(), filepath), 'utf-8');
 const extractFormat = (filepath) => path.extname(filepath).replace('.', '');
 
-const genDiff = (filepath1, filepath2, formatName 'stylish') => {
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const extname1 = extractFormat(filepath1);
   const extname2 = extractFormat(filepath2);
 
@@ -17,8 +18,8 @@ const genDiff = (filepath1, filepath2, formatName 'stylish') => {
   const parsedData1 = parser(data1, extname1);
   const parsedData2 = parser(data2, extname2);
 
-  const diffTree = gendiff(parsedData1, parsedData2);
-  return formatter(formatName)(diffTree);
+  const diffTree = gendiffTree(parsedData1, parsedData2);
+  return formatter(formatName, diffTree);
 };
 
 export default genDiff;

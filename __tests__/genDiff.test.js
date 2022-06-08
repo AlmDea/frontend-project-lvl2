@@ -1,22 +1,38 @@
-import path, { dirname } from 'path';
+import _ from 'lodash';
+import * as fs from 'fs';
+import * as path from 'path';
 import { fileURLToPath } from 'url';
-import { readFileSync } from 'fs';
-import gendiff from '../src/index.js';
+import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const getFixturePath = (filename) =>
+const __dirname = path.dirname(__filename);
+
+const getFixturesPath = (filename) =>
   path.join(__dirname, '..', '__fixtures__', filename);
-const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
+const readFile = (filepath) =>
+  fs.readFileSync(getFixturesPath(filepath), 'utf-8');
 
-const cases = [
-  ['stylish', readFile('formaters/stylish-result.txt')],
-  ['plain', readFile('formaters/plain-result.txt')],
-  ['json', readFile('formaters/json-result.txt')],
-];
+const extensions = ['json', 'yml'];
+const expectedData = {
+  stylish: '',
+  plain: '',
+  json: '',
+};
 
-test.each(cases)('%s format', (arg, expected) => {
-  expect(
-    genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), arg)
-  ).toEqual(expected);
+beforeAll(() => {
+  _.assign(expectedData, { stylish: readFile('expected-stylish.txt') });
+  _.assign(expectedData, { plain: readFile('expected-plain.txt') });
+  _.assign(expectedData, { json: readFile('expected-json.txt') });
+});
+
+test.each(extensions)('gendiff %s format file', (extname) => {
+  const beforeFile = getFixturesPath(`before.${extname}`);
+  const afterFile = getFixturesPath(`after.${extname}`);
+
+  expect(genDiff(beforeFile, afterFile)).toEqual(expectedData.stylish);
+  expect(genDiff(beforeFile, afterFile, 'stylish')).toEqual(
+    expectedData.stylish
+  );
+  expect(genDiff(beforeFile, afterFile, 'plain')).toEqual(expectedData.plain);
+  expect(genDiff(beforeFile, afterFile, 'json')).toEqual(expectedData.json);
 });

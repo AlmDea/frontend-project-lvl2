@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const gendiff = (data1, data2) => {
+const gendiffTree = (data1, data2) => {
   const keys = Object.keys({ ...data1, ...data2 });
   const sortedKeys = _.sortBy(keys);
   return sortedKeys.map((key) => {
@@ -13,7 +13,7 @@ const gendiff = (data1, data2) => {
       return { type: 'removed', key, val: value1 };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      return { type: 'nested', key, children: gendiff(value1, value2) };
+      return { type: 'nested', key, children: gendiffTree(value1, value2) };
     }
     if (!_.isEqual(value1, value2)) {
       return {
@@ -27,4 +27,4 @@ const gendiff = (data1, data2) => {
   });
 };
 
-export default gendiff;
+export default gendiffTree;
