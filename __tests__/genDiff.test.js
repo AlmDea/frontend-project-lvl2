@@ -1,38 +1,41 @@
-import _ from 'lodash';
-import * as fs from 'fs';
-import * as path from 'path';
+import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
-import genDiff from '../src/index.js';
+import path, { dirname } from 'path';
+import { readFileSync } from 'fs';
+import generateDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
-const getFixturesPath = (filename) =>
+const fileExtensions = ['json', 'yml'];
+const formatters = ['stylish', 'plain', 'json'];
+
+const getFixturePath = (filename) =>
   path.join(__dirname, '..', '__fixtures__', filename);
-const readFile = (filepath) =>
-  fs.readFileSync(getFixturesPath(filepath), 'utf-8');
-
-const extensions = ['json', 'yml'];
-const expectedData = {
-  stylish: '',
-  plain: '',
-  json: '',
-};
-
-beforeAll(() => {
-  _.assign(expectedData, { stylish: readFile('expected-stylish.txt') });
-  _.assign(expectedData, { plain: readFile('expected-plain.txt') });
-  _.assign(expectedData, { json: readFile('expected-json.txt') });
+const stylish = readFileSync(getFixturePath('stylish.txt'), {
+  encoding: 'utf8',
+  flag: 'r',
+});
+const plain = readFileSync(getFixturePath('plain.txt'), {
+  encoding: 'utf8',
+  flag: 'r',
+});
+const json = readFileSync(getFixturePath('json.txt'), {
+  encoding: 'utf8',
+  flag: 'r',
 });
 
-test.each(extensions)('gendiff %s format file', (extname) => {
-  const beforeFile = getFixturesPath(`before.${extname}`);
-  const afterFile = getFixturesPath(`after.${extname}`);
+const output = { stylish, plain, json };
 
-  expect(genDiff(beforeFile, afterFile)).toEqual(expectedData.stylish);
-  expect(genDiff(beforeFile, afterFile, 'stylish')).toEqual(
-    expectedData.stylish
-  );
-  expect(genDiff(beforeFile, afterFile, 'plain')).toEqual(expectedData.plain);
-  expect(genDiff(beforeFile, afterFile, 'json')).toEqual(expectedData.json);
-});
+const testArgs = formatters.flatMap((format) =>
+  fileExtensions.map((fileExtension) => [fileExtension, format])
+);
+
+test.each(testArgs)(
+  '%s type files difference with %s output',
+  (fileExtension, format) => {
+    const before = getFixturePath(`before.${fileExtension}`);
+    const after = getFixturePath(`after.${fileExtension}`);
+    expect(generateDiff(before, after, format)).toEqual(output[format]);
+  }
+);
