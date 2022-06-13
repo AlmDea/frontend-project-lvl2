@@ -1,19 +1,19 @@
 import _ from 'lodash';
 
-const normalizeValue = (val) => {
-  if (_.isObject(val)) return '[complex value]';
-  if (_.isString(val)) return `'${val}'`;
-  return val;
+const normalizedValue = (value) => {
+  if (_.isObject(value)) return '[complex value]';
+  if (_.isString(value)) return `'${value}'`;
+  return value;
 };
 const buildRemovedPropStr = (key) => `Property '${key}' was removed`;
-const buildAddedPropStr = (key, val) =>
-  `Property '${key}' was added with value: ${normalizeValue(val)}`;
+const buildAddedPropStr = (key, value) =>
+  `Property '${key}' was added with value: ${normalizedValue(value)}`;
 const buildUpdatedPropStr = (key, oldValue, newValue) =>
-  `Property '${key}' was updated. From ${normalizeValue(
+  `Property '${key}' was updated. From ${normalizedValue(
     oldValue
-  )} to ${normalizeValue(newValue)}`;
+  )} to ${normalizedValue(newValue)}`;
 
-const buildDiffStrings = (diff, parent = '') =>
+const buildDiffLines = (diff, parent = '') =>
   diff.map((node) => {
     const keyPath = parent ? `${parent}.${node.key}` : node.key;
     switch (node.status) {
@@ -24,13 +24,13 @@ const buildDiffStrings = (diff, parent = '') =>
       case 'updated':
         return buildUpdatedPropStr(keyPath, node.oldValue, node.newValue);
       case 'nested':
-        return buildDiffStrings(node.children, keyPath);
+        return buildDiffLines(node.children, keyPath);
       default:
         return '';
     }
   });
 
 export default (data) =>
-  _.flattenDeep(buildDiffStrings(data))
+  _.flattenDeep(buildDiffLines(data))
     .filter((line) => line)
     .join('\n');

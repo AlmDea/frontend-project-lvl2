@@ -7,47 +7,30 @@ import generateDiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const getFixturePath = (filename) =>
+const getPath = (filename) =>
   path.join(__dirname, '..', '__fixtures__', filename);
 
-const jsonFile1 = getFixturePath('before.json');
-const jsonFile2 = getFixturePath('after.json');
+const jsonFile1 = getPath('before.json');
+const jsonFile2 = getPath('after.json');
 
-const yamlFile1 = getFixturePath('before.yml');
-const yamlFile2 = getFixturePath('after.yaml');
+const ymlFile1 = getPath('before.yml');
+const ymlFile2 = getPath('after.yaml');
 
-const formatStylishCorrectLine = fs.readFileSync(
-  getFixturePath('stylish.txt'),
-  'utf-8'
-);
-const formatPlainCorrectLine = fs.readFileSync(
-  getFixturePath('plain.txt'),
-  'utf-8'
-);
-const formatJsonCorrectLine = fs.readFileSync(
-  getFixturePath('json.txt'),
-  'utf-8'
-);
+const stylishFormat = fs.readFileSync(getPath('stylish.txt'), 'utf-8');
+const plainFormat = fs.readFileSync(getPath('plain.txt'), 'utf-8');
+const jsonFormat = fs.readFileSync(getPath('json.txt'), 'utf-8');
 
 test('format stylish test', () => {
-  expect(generateDiff(jsonFile1, jsonFile2)).toBe(formatStylishCorrectLine);
-  expect(generateDiff(yamlFile1, yamlFile2)).toBe(formatStylishCorrectLine);
+  expect(generateDiff(jsonFile1, jsonFile2)).toBe(stylishFormat);
+  expect(generateDiff(ymlFile1, ymlFile2)).toBe(stylishFormat);
 });
 
 test('format plain test', () => {
-  expect(generateDiff(jsonFile1, jsonFile2, 'plain')).toBe(
-    formatPlainCorrectLine
-  );
-  expect(generateDiff(yamlFile1, yamlFile2, 'plain')).toBe(
-    formatPlainCorrectLine
-  );
+  expect(generateDiff(jsonFile1, jsonFile2, 'plain')).toBe(plainFormat);
+  expect(generateDiff(ymlFile1, ymlFile2, 'plain')).toBe(plainFormat);
 });
 
 test('format json test', () => {
-  expect(generateDiff(jsonFile1, jsonFile2, 'json')).toBe(
-    formatJsonCorrectLine
-  );
-  expect(generateDiff(yamlFile1, yamlFile2, 'json')).toBe(
-    formatJsonCorrectLine
-  );
+  expect(generateDiff(jsonFile1, jsonFile2, 'json')).toBe(jsonFormat);
+  expect(generateDiff(ymlFile1, ymlFile2, 'json')).toBe(jsonFormat);
 });
