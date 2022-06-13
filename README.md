@@ -7,5 +7,11 @@
 
 [![asciicast](https://asciinema.org/a/Z1gIxe57c7K9LMMJvcnhaTzOH.svg)](https://asciinema.org/a/Z1gIxe57c7K9LMMJvcnhaTzOH)
 [![asciicast](https://asciinema.org/a/500610.svg)](https://asciinema.org/a/500610)
-https://asciinema.org/connect/c896a9a0-869f-42a7-8744-3f32c12c1c16
-[![asciicast](https://asciinema.org/a/500594.svg)](https://asciinema.org/a/500594)
+# yml
+[https://asciinema.org/connect/c896a9a0-869f-42a7-8744-3f32c12c1c16](https://asciinema.org/a/06os0e1hyxQopptNhnTVMNzuf)
+# json
+[![asciicast](https://asciinema.org/a/06os0e1hyxQopptNhnTVMNzuf.svg)](https://asciinema.org/a/06os0e1hyxQopptNhnTVMNzuf)
+# output in plain format
+[![asciicast](https://asciinema.org/a/MbydVkSAbbm5VucHq6W8ZAaVg.svg)](https://asciinema.org/a/MbydVkSAbbm5VucHq6W8ZAaVg)
+# output in json format
+[![asciicast](https://asciinema.org/a/wBiS3xHOxRn23wqSuiW4Ey8Af.svg)](https://asciinema.org/a/wBiS3xHOxRn23wqSuiW4Ey8Af)
