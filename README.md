@@ -4,6 +4,21 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
 
+## Install
+```
+# clone the repository
+git clone https://github.com/AlmDea/frontend-project-lvl2.git
+
+# go to the folder with the repository
+cd frontend-project-lvl2
+
+# install dependencies
+make install
+
+# install the package
+make link
+```
+
 [![asciicast](https://asciinema.org/a/Z1gIxe57c7K9LMMJvcnhaTzOH.svg)](https://asciinema.org/a/Z1gIxe57c7K9LMMJvcnhaTzOH)
 [![asciicast](https://asciinema.org/a/500610.svg)](https://asciinema.org/a/500610)
 # yml
