@@ -17,8 +17,6 @@ const stringify = (currentValue, depth) => {
   return buildObjectStr(lines, depth);
 };
 
-////////
-
 export default (data) => {
   const iter = (tree, depth = 1) =>
     tree.map((node) => {
