@@ -1,7 +1,9 @@
+plugins:
+  - jest
 env:
   node: true
   es2021: true
-  jest: true
+  browser: true
 extends:
   - airbnb-base
   - 'plugin:jest/recommended'
