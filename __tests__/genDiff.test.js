@@ -1,4 +1,3 @@
-//import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import * as path from 'path';
 import * as fs from 'fs';
