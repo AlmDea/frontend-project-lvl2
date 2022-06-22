@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable implicit-arrow-linebreak */
 import _ from 'lodash';
 
 const normalizedValue = (value) => {

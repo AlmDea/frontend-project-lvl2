@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import * as path from 'path';
