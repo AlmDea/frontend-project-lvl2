@@ -2,7 +2,7 @@
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import * as path from 'path';
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 import generateDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,11 +15,11 @@ const jsonFile1 = getPath('before.json');
 const jsonFile2 = getPath('after.json');
 
 const ymlFile1 = getPath('before.yml');
-const ymlFile2 = getPath('after.yaml');
+const ymlFile2 = getPath('after.yml');
 
-const stylishFormat = fs.readFileSync(getPath('stylish.txt'), 'utf-8');
-const plainFormat = fs.readFileSync(getPath('plain.txt'), 'utf-8');
-const jsonFormat = fs.readFileSync(getPath('json.txt'), 'utf-8');
+const stylishFormat = readFileSync(getPath('stylish.txt'), 'utf-8');
+const plainFormat = readFileSync(getPath('plain.txt'), 'utf-8');
+const jsonFormat = readFileSync(getPath('json.txt'), 'utf-8');
 
 test('format stylish test', () => {
   expect(generateDiff(jsonFile1, jsonFile2)).toBe(stylishFormat);
