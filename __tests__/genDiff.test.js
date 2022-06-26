@@ -1,8 +1,9 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable implicit-arrow-linebreak */
 import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import * as path from 'path';
-import { readFileSync } from 'fs';
+import fs from 'fs';
 import generateDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,28 +11,25 @@ const __dirname = path.dirname(__filename);
 
 const getPath = (filename) =>
   path.join(__dirname, '..', '__fixtures__', filename);
+const readFile = (filename) => fs.readFileSync(getPath(filename), 'utf-8');
 
-const jsonFile1 = getPath('before.json');
-const jsonFile2 = getPath('after.json');
-
-const ymlFile1 = getPath('before.yml');
-const ymlFile2 = getPath('after.yml');
-
-const stylishFormat = readFileSync(getPath('stylish.txt'), 'utf-8');
-const plainFormat = readFileSync(getPath('plain.txt'), 'utf-8');
-const jsonFormat = readFileSync(getPath('json.txt'), 'utf-8');
-
-test('format stylish test', () => {
-  expect(generateDiff(jsonFile1, jsonFile2)).toBe(stylishFormat);
-  expect(generateDiff(ymlFile1, ymlFile2)).toBe(stylishFormat);
+test.each([
+  ['before.json', 'after.json', 'stylish', 'stylish.txt'],
+  ['before.yml', 'after.yml', 'stylish', 'stylish.txt'],
+  ['before.json', 'after.json', 'plain', 'plain.txt'],
+  ['before.yml', 'after.yml', 'plain', 'plain.txt'],
+  ['before.json', 'after.json', 'json', 'json.txt'],
+  ['before.yml', 'after.yml', 'json', 'json.txt'],
+])('Show difference', (file1, file2, format, expectedResult) => {
+  const result = generateDiff(getPath(file1), getPath(file2), format);
+  expect(result).toBe(readFile(`${expectedResult}`));
 });
 
-test('format plain test', () => {
-  expect(generateDiff(jsonFile1, jsonFile2, 'plain')).toBe(plainFormat);
-  expect(generateDiff(ymlFile1, ymlFile2, 'plain')).toBe(plainFormat);
-});
-
-test('format json test', () => {
-  expect(generateDiff(jsonFile1, jsonFile2, 'json')).toBe(jsonFormat);
-  expect(generateDiff(ymlFile1, ymlFile2, 'json')).toBe(jsonFormat);
+test('unknown format', () => {
+  const file1 = getPath('before.json');
+  const file2 = getPath('after.json');
+  const error = new Error("Unknown format 'txt'.");
+  expect(() => {
+    generateDiff(file1, file2, 'txt');
+  }).toThrow(error);
 });
