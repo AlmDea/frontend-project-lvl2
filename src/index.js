@@ -6,7 +6,7 @@ import format from './formatters/index.js';
 
 const getDataFormat = (filePath) => path.extname(filePath).substring(1);
 
-const getFormattedFile = (filePath) => {
+const readFile = (filePath) => {
   const fileData = fs.readFileSync(filePath, { encoding: 'utf8' });
   const dataFormat = getDataFormat(filePath);
   const parsedData = parse(fileData, dataFormat);
@@ -14,8 +14,8 @@ const getFormattedFile = (filePath) => {
 };
 
 const generateDiff = (filePath1, filePath2, formatName = 'stylish') => {
-  const parsedData1 = getFormattedFile(filePath1);
-  const parsedData2 = getFormattedFile(filePath2);
+  const parsedData1 = readFile(filePath1);
+  const parsedData2 = readFile(filePath2);
   const getDifference = buildTree(parsedData1, parsedData2);
   return format(getDifference, formatName);
 };
