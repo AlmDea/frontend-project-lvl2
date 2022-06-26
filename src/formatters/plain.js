@@ -2,18 +2,18 @@
 /* eslint-disable implicit-arrow-linebreak */
 import _ from 'lodash';
 
-const normalizedValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) return '[complex value]';
   if (_.isString(value)) return `'${value}'`;
   return value;
 };
 const buildRemovedPropStr = (key) => `Property '${key}' was removed`;
 const buildAddedPropStr = (key, value) =>
-  `Property '${key}' was added with value: ${normalizedValue(value)}`;
+  `Property '${key}' was added with value: ${stringify(value)}`;
 const buildUpdatedPropStr = (key, oldValue, newValue) =>
-  `Property '${key}' was updated. From ${normalizedValue(
-    oldValue
-  )} to ${normalizedValue(newValue)}`;
+  `Property '${key}' was updated. From ${stringify(oldValue)} to ${stringify(
+    newValue
+  )}`;
 
 const buildDiffLines = (diff, parent = '') =>
   diff.map((node) => {
