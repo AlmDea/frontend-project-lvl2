@@ -1,8 +1,8 @@
 import path from 'path';
 import * as fs from 'fs';
-import parse from './parsers.js';
-import buildTree from './buildTree.js';
-import format from './formatters/index.js';
+import parse from './src/parsers.js';
+import buildTree from './src/buildTree.js';
+import format from './src/formatters/index.js';
 
 const getDataFormat = (filePath) => path.extname(filePath).substring(1);
 

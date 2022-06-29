@@ -3,10 +3,15 @@
 import _ from 'lodash';
 
 const stringify = (value) => {
-  if (_.isObject(value)) return '[complex value]';
-  if (_.isString(value)) return `'${value}'`;
-  return value;
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  if (_.isString(value)) {
+    return `'${value}'`;
+  }
+  return String(value);
 };
+
 const buildRemovedPropStr = (key) => `Property '${key}' was removed`;
 const buildAddedPropStr = (key, value) =>
   `Property '${key}' was added with value: ${stringify(value)}`;

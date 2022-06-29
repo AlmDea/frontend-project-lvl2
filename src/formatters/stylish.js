@@ -11,7 +11,9 @@ const buildObjectStr = (lines, depth) =>
   ['{', ...lines, `${getIndent(depth, true)}}`].join('\n');
 
 const stringify = (currentValue, depth) => {
-  if (!_.isPlainObject(currentValue)) return currentValue;
+  if (!_.isPlainObject(currentValue)) {
+    return currentValue;
+  }
   const lines = Object.entries(currentValue).map(
     ([key, value]) =>
       `${getIndent(depth)}  ${key}: ${stringify(value, depth + 1)}`

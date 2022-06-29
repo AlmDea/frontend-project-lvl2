@@ -1,8 +1,11 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Difference generator is a cli program that determines the difference between two data structures.",
-  "main": "./src/index.js",
+  "description": "Difference calculator",
+  "main": "index.js",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --bail"
@@ -22,9 +25,6 @@
     "jest-cli": "^28.1.1",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
-  },
-  "bin": {
-    "gendiff": "bin/gendiff.js"
   },
   "devDependencies": {
     "@jest/globals": "^27.0.6",
